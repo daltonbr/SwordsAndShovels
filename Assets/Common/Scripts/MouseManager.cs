@@ -1,22 +1,33 @@
 using UnityEngine;
-
+using UnityEngine.Events;
 
 public class MouseManager : MonoBehaviour
 {
-    public LayerMask clickableLayer; // layermask used to isolate raycasts against clickable layers
+    [Tooltip("layermask used to isolate raycasts against clickable layers")]
+    public LayerMask clickableLayer;
 
-    public Texture2D pointer; // normal mouse pointer
-    public Texture2D target; // target mouse pointer
-    public Texture2D doorway; // doorway mouse pointer
+    [Tooltip("normal mouse pointer")]
+    public Texture2D pointer;
+    [Tooltip("target mouse pointer")]
+    public Texture2D target;
+    [Tooltip("doorway mouse pointer")]
+    public Texture2D doorway;
 
-    void Update()
+    public EventVector3 OnClickEnvironment;
+
+    private Camera camera;
+    
+    private void Awake()
     {
-        // Raycast into scene
-        RaycastHit hit;
-        if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit, 50, clickableLayer.value))
+        camera = Camera.main;
+    }
+
+    private void Update()
+    {
+        if (Physics.Raycast(camera.ScreenPointToRay(Input.mousePosition), out var hit, 50, clickableLayer.value))
         {
             bool door = false;
-            if (hit.collider.gameObject.tag == "Doorway")
+            if (hit.collider.gameObject.CompareTag("Doorway"))
             {
                 Cursor.SetCursor(doorway, new Vector2(16, 16), CursorMode.Auto);
                 door = true;
@@ -26,7 +37,18 @@ public class MouseManager : MonoBehaviour
                 Cursor.SetCursor(target, new Vector2(16, 16), CursorMode.Auto);
             }
 
-
+            if (Input.GetMouseButton(0))
+            {
+                if (door)
+                {
+                    Transform doorway = hit.collider.gameObject.transform;
+                    OnClickEnvironment?.Invoke(doorway.position + doorway.forward * 10);
+                }
+                else
+                {
+                    OnClickEnvironment?.Invoke(hit.point);
+                }
+            }
         }
         else
         {
@@ -34,4 +56,7 @@ public class MouseManager : MonoBehaviour
         }
     }
 }
+
+[System.Serializable]
+public class EventVector3 : UnityEvent<Vector3> { }
 
