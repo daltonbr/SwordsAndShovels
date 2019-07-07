@@ -1,3 +1,4 @@
+using System.Runtime.Serialization;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -7,24 +8,24 @@ public class MouseManager : MonoBehaviour
     public LayerMask clickableLayer;
 
     [Tooltip("normal mouse pointer")]
-    public Texture2D pointer;
+    [SerializeField] private Texture2D pointer;
     [Tooltip("target mouse pointer")]
-    public Texture2D target;
+    [SerializeField] private Texture2D target;
     [Tooltip("doorway mouse pointer")]
-    public Texture2D doorway;
+    [SerializeField] private Texture2D doorway;
 
     public EventVector3 OnClickEnvironment;
 
-    private Camera camera;
+    private Camera cam;
     
     private void Awake()
     {
-        camera = Camera.main;
+        cam = Camera.main;
     }
 
     private void Update()
     {
-        if (Physics.Raycast(camera.ScreenPointToRay(Input.mousePosition), out var hit, 50, clickableLayer.value))
+        if (Physics.Raycast(cam.ScreenPointToRay(Input.mousePosition), out var hit, 50, clickableLayer.value))
         {
             bool door = false;
             if (hit.collider.gameObject.CompareTag("Doorway"))
