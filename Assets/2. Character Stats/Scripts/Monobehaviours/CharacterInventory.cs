@@ -7,13 +7,13 @@ using UnityEngine.UI;
 public class CharacterInventory : MonoBehaviour
 {
     #region Variable Declarations
-    public static CharacterInventory instance;
+    public static CharacterInventory Instance;
     #endregion
 
     #region Initializations
     void Start()
     {
-        instance = this;
+        Instance = this;
     }
     #endregion
 }
