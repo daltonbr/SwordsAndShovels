@@ -16,7 +16,7 @@ public class CharacterStats : MonoBehaviour
     }
 
     #endregion
-    
+
     #region Initializations
 
     private void Start()
@@ -45,6 +45,67 @@ public class CharacterStats : MonoBehaviour
             characterDefinition.charLevel = 1;
         }
     }
-    
+
     #endregion
+
+    #region Stat Increasers
+
+    public void ApplyHealth(int healthAmount)
+    {
+        characterDefinition.ApplyHealth(healthAmount);
+    }
+
+    public void ApplyMana(int manaAmount)
+    {
+        characterDefinition.ApplyMana(manaAmount);
+    }
+
+    public void GiveWealth(int wealthAmount)
+    {
+        characterDefinition.GiveWealth(wealthAmount);
+    }
+
+    public void EquipWeapon(ItemPickUp weaponPickUp, CharacterInventory characterInventory, GameObject weaponSlot)
+    {
+        Rigidbody newWeapon;
+        weapon = weaponPickUp;
+        //characterInventory.inventoryDisplaySlots[2].sprite = weaponPickUp.itemDefinition.itemIcon;
+        //newWeapon = Instantiate(weaponPickUp.itemDefinition, weaponSlotObject, weaponSlot.transform);
+        //currentDamage = baseDamage + weapon.itemDefinition.itemAmount;
+    }
+
+// Commented lines are going to be implemented in a future Item loot course
+//    public void EquipArmor(ItemPickUp armorPickUp, CharacterInventory characterInventory)
+//    {
+//        switch (armorPickUp.itemDefinition.itemArmorSubType)
+//        {
+//            case ItemArmorSubType.Head:
+//                //characterInventory.inventoryDisplaySlots[3].sprite = armorPickUp.itemDefinition.itemIcon;
+//                headArmor = armorPickUp;
+//                currentResistance += armorPickUp.itemDefinition.itemAmount;
+//                break;
+//            case ItemArmorSubType.Chest:
+//                //characterInventory.inventoryDisplaySlots[4].sprite = armorPickUp.itemDefinition.itemIcon;
+//                chestArmor = armorPickUp;
+//                currentResistance += armorPickUp.itemDefinition.itemAmount;
+//                break;
+//            case ItemArmorSubType.Hands:
+//                //characterInventory.inventoryDisplaySlots[5].sprite = armorPickUp.itemDefinition.itemIcon;
+//                handArmor = armorPickUp;
+//                currentResistance += armorPickUp.itemDefinition.itemAmount;
+//                break;
+//            case ItemArmorSubType.Legs:
+//                //characterInventory.inventoryDisplaySlots[6].sprite = armorPickUp.itemDefinition.itemIcon;
+//                legArmor = armorPickUp;
+//                currentResistance += armorPickUp.itemDefinition.itemAmount;
+//                break;
+//            case ItemArmorSubType.Boots:
+//                //characterInventory.inventoryDisplaySlots[7].sprite = armorPickUp.itemDefinition.itemIcon;
+//                footArmor = armorPickUp;
+//                currentResistance += armorPickUp.itemDefinition.itemAmount;
+//                break;
+//        }
+//    }
+
+#endregion
 }
