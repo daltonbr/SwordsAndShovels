@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class CharacterStats : MonoBehaviour
 {
@@ -65,47 +63,41 @@ public class CharacterStats : MonoBehaviour
         characterDefinition.GiveWealth(wealthAmount);
     }
 
-    public void EquipWeapon(ItemPickUp weaponPickUp, CharacterInventory characterInventory, GameObject weaponSlot)
+    #endregion Stat Increasers
+
+    #region Weapon and Armor Change
+
+    public void ChangeWeapon(ItemPickUp weaponPickUp)
     {
-        Rigidbody newWeapon;
-        weapon = weaponPickUp;
-        //characterInventory.inventoryDisplaySlots[2].sprite = weaponPickUp.itemDefinition.itemIcon;
-        //newWeapon = Instantiate(weaponPickUp.itemDefinition, weaponSlotObject, weaponSlot.transform);
-        //currentDamage = baseDamage + weapon.itemDefinition.itemAmount;
+        if (!characterDefinition.UnEquipWeapon(weaponPickUp, inventory, weaponSlot))
+        {
+            characterDefinition.EquipWeapon(weaponPickUp, inventory, weaponSlot);
+        }
+    }
+    
+    public void ChangeArmor(ItemPickUp armorPickUp)
+    {
+        if (!characterDefinition.UnEquipArmor(armorPickUp, inventory))
+        {
+            characterDefinition.EquipArmor(armorPickUp, inventory);
+        }
     }
 
-// Commented lines are going to be implemented in a future Item loot course
-//    public void EquipArmor(ItemPickUp armorPickUp, CharacterInventory characterInventory)
-//    {
-//        switch (armorPickUp.itemDefinition.itemArmorSubType)
-//        {
-//            case ItemArmorSubType.Head:
-//                //characterInventory.inventoryDisplaySlots[3].sprite = armorPickUp.itemDefinition.itemIcon;
-//                headArmor = armorPickUp;
-//                currentResistance += armorPickUp.itemDefinition.itemAmount;
-//                break;
-//            case ItemArmorSubType.Chest:
-//                //characterInventory.inventoryDisplaySlots[4].sprite = armorPickUp.itemDefinition.itemIcon;
-//                chestArmor = armorPickUp;
-//                currentResistance += armorPickUp.itemDefinition.itemAmount;
-//                break;
-//            case ItemArmorSubType.Hands:
-//                //characterInventory.inventoryDisplaySlots[5].sprite = armorPickUp.itemDefinition.itemIcon;
-//                handArmor = armorPickUp;
-//                currentResistance += armorPickUp.itemDefinition.itemAmount;
-//                break;
-//            case ItemArmorSubType.Legs:
-//                //characterInventory.inventoryDisplaySlots[6].sprite = armorPickUp.itemDefinition.itemIcon;
-//                legArmor = armorPickUp;
-//                currentResistance += armorPickUp.itemDefinition.itemAmount;
-//                break;
-//            case ItemArmorSubType.Boots:
-//                //characterInventory.inventoryDisplaySlots[7].sprite = armorPickUp.itemDefinition.itemIcon;
-//                footArmor = armorPickUp;
-//                currentResistance += armorPickUp.itemDefinition.itemAmount;
-//                break;
-//        }
-//    }
+    #endregion
+    
+    #region Stat Reducers
 
-#endregion
+    public void TakeDamage(int amount)
+    {
+        characterDefinition.TakeDamage(amount);
+    }
+
+    public void TakeMana(int amount)
+    {
+        characterDefinition.TakeMana(amount);
+    }
+    
+    //TODO: implement 'TakeWealth'
+
+    #endregion
 }

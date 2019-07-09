@@ -69,7 +69,7 @@ public class CharacterStats_SO : ScriptableObject
 
     public void ApplyHealth(int healthAmount)
     {
-        if (currentHealth + healthAmount) > maxHealth)
+        if ((currentHealth + healthAmount) > maxHealth)
         {
             currentHealth = maxHealth;
         }
@@ -81,7 +81,7 @@ public class CharacterStats_SO : ScriptableObject
 
     public void ApplyMana(int manaAmount)
     {
-        if (currentMana + manaAmount) > maxMana))
+        if ((currentMana + manaAmount) > maxMana)
         {
             currentMana = maxMana;
         }
@@ -113,9 +113,9 @@ public class CharacterStats_SO : ScriptableObject
         //currentDamage = baseDamage + weapon.itemDefinition.itemAmount;
     }
 
-// Commented lines are going to be implemented in a future Item loot course
-//    public void EquipArmor(ItemPickUp armorPickUp, CharacterInventory characterInventory)
-//    {
+//TODO: Commented lines are going to be implemented in a future Item loot course
+    public void EquipArmor(ItemPickUp armorPickUp, CharacterInventory characterInventory)
+    {
 //        switch (armorPickUp.itemDefinition.itemArmorSubType)
 //        {
 //            case ItemArmorSubType.Head:
@@ -144,7 +144,138 @@ public class CharacterStats_SO : ScriptableObject
 //                currentResistance += armorPickUp.itemDefinition.itemAmount;
 //                break;
 //        }
-//    }
+    }
 
     #endregion
+    
+    #region Stat Reducers
+
+    public void TakeDamage(int amount)
+    {
+        currentHealth -= amount;
+
+        if (currentHealth < 0)
+        {
+            Death();
+        }
+    }
+
+    public void TakeMana(int amount)
+    {
+        // TODO: we can consider not spending mana, if we don't have enough, for this we may return a bool in this method.
+        currentMana -= amount;
+
+        if (currentMana < 0)
+        {
+            currentMana = 0;
+        }
+    }
+
+    public bool UnEquipWeapon(ItemPickUp weaponPickUp, CharacterInventory characterInventory, GameObject weaponSlot)
+    {
+        bool previousWeaponSame = false;
+
+        if (weapon != null)
+        {
+            if (weapon == weaponPickUp)
+            {
+                previousWeaponSame = true;
+            }
+
+            //characterInventory.inventoryDisplaySlots[2].sprite = null;
+            Object.Destroy(weaponSlot.transform.GetChild(1).gameObject);
+            weapon = null;
+            currentDamage = baseDamage;
+        }
+
+        return previousWeaponSame;
+    }
+
+    public bool UnEquipArmor(ItemPickUp armorPickUp, CharacterInventory characterInventory)
+    {
+        bool previousArmorSame = false;
+
+        switch (armorPickUp.itemDefinition.itemArmorSubType)
+        {
+            case ItemArmorSubType.Head:
+                if (headArmor != null)
+                {
+                    if (headArmor == armorPickUp)
+                    {
+                        previousArmorSame = true;
+                    }
+
+                    //characterInventory.inventoryDisplaySlots[3].sprite = null;
+                    currentResistance -= armorPickUp.itemDefinition.itemAmount;
+                    headArmor = null;
+                }
+                break;
+            
+            case ItemArmorSubType.Chest:
+                if (chestArmor != null)
+                {
+                    if (chestArmor == armorPickUp)
+                    {
+                        previousArmorSame = true;
+                    }
+
+                    //characterInventory.inventoryDisplaySlots[4].sprite = null;
+                    currentResistance -= armorPickUp.itemDefinition.itemAmount;
+                    chestArmor = null;
+                }
+                break;
+            
+            case ItemArmorSubType.Hands:
+                if (handArmor != null)
+                {
+                    if (handArmor == armorPickUp)
+                    {
+                        previousArmorSame = true;
+                    }
+
+                    //characterInventory.inventoryDisplaySlots[5].sprite = null;
+                    currentResistance -= armorPickUp.itemDefinition.itemAmount;
+                    handArmor = null;
+                }
+                break;
+            
+            case ItemArmorSubType.Legs:
+                if (legArmor != null)
+                {
+                    if (legArmor == armorPickUp)
+                    {
+                        previousArmorSame = true;
+                    }
+
+                    //characterInventory.inventoryDisplaySlots[6].sprite = null;
+                    currentResistance -= armorPickUp.itemDefinition.itemAmount;
+                    legArmor = null;
+                }
+                break;
+            
+            case ItemArmorSubType.Boots:
+                if (footArmor != null)
+                {
+                    if (footArmor == armorPickUp)
+                    {
+                        previousArmorSame = true;
+                    }
+
+                    //characterInventory.inventoryDisplaySlots[7].sprite = null;
+                    currentResistance -= armorPickUp.itemDefinition.itemAmount;
+                    footArmor = null;
+                }
+                break;
+        }
+
+        return previousArmorSame;
+    }
+    
+    #endregion
+    
+    private void Death()
+    {
+        Debug.Log("Death not implemented");
+    }
+    
 }
