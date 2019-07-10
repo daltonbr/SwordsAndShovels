@@ -46,6 +46,20 @@ public class CharacterStats : MonoBehaviour
 
     #endregion
 
+    #region SaveData
+
+    private void Update()
+    {
+        //TODO: This should be triggered by the game manager during a save point
+        if (Input.GetMouseButtonDown(2))
+        {
+            Debug.Log("Saving Character Data");
+            characterDefinition.SaveCharacterData();
+        }
+    }
+    
+    #endregion
+    
     #region Stat Increasers
 
     public void ApplyHealth(int healthAmount)
@@ -100,4 +114,19 @@ public class CharacterStats : MonoBehaviour
     //TODO: implement 'TakeWealth'
 
     #endregion
+
+    #region Reporters
+
+    public int GetHealth()
+    {
+        return characterDefinition.currentHealth;
+    }
+
+    public ItemPickUp GetCurrentWeapon()
+    {
+        return characterDefinition.weapon;
+    }
+    
+    #endregion
+    
 }

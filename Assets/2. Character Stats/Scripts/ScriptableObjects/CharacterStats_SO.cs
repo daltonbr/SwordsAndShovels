@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using UnityEditor;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "NewStats", menuName = "Character/Stats", order = 1)]
@@ -273,9 +272,38 @@ public class CharacterStats_SO : ScriptableObject
     
     #endregion
     
+    #region Character Level Up and Death
+    
     private void Death()
     {
         Debug.Log("Death not implemented");
+        // TODO: Call to Game Manager for Death State to trigger respawn
+        // TODO: Display the Death visualisation
     }
+
+    private void LevelUp()
+    {
+        charLevel += 1;
+        // TODO: Display Level Up visualisation
+
+        maxHealth = charLevelUps[charLevel - 1].maxHealth;
+        maxMana = charLevelUps[charLevel - 1].maxMana;
+        maxHealth = charLevelUps[charLevel - 1].maxHealth;
+        baseDamage = charLevelUps[charLevel - 1].baseDamage;
+        baseResistance = charLevelUps[charLevel - 1].baseResistance;
+        maxEncumbrance = charLevelUps[charLevel - 1].maxEncumbrance;
+    }
+
+    #endregion Character Level Up and Death
+
+    #region Save Character Data
+
+    public void SaveCharacterData()
+    {
+        saveDataOnClose = true;
+        EditorUtility.SetDirty(this);
+    }
+
+    #endregion Save Character Data
     
 }
