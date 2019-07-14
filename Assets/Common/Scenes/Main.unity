@@ -1251,9 +1251,9 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 2097070135}
   m_PrefabAsset: {fileID: 0}
---- !u!195 &1302807680 stripped
+--- !u!195 &1302807682 stripped
 NavMeshAgent:
-  m_CorrespondingSourceObject: {fileID: 1302807680, guid: dd51aa0141228c3478f60d3fe5ba00eb,
+  m_CorrespondingSourceObject: {fileID: 195669500142841566, guid: dd51aa0141228c3478f60d3fe5ba00eb,
     type: 3}
   m_PrefabInstance: {fileID: 2097070135}
   m_PrefabAsset: {fileID: 0}
@@ -1478,7 +1478,7 @@ PrefabInstance:
         type: 3}
       propertyPath: OnClickEnvironment.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 1302807680}
+      objectReference: {fileID: 1302807682}
     - target: {fileID: 4402563399457722, guid: 4052bdf0c3f66bb4a8e22553843b139d, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -1580,5 +1580,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 114162175725589962, guid: dd51aa0141228c3478f60d3fe5ba00eb, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: dd51aa0141228c3478f60d3fe5ba00eb, type: 3}
