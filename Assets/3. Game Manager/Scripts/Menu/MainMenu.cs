@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 [RequireComponent(typeof(Animation))]
 public class MainMenu : MonoBehaviour
@@ -12,6 +13,16 @@ public class MainMenu : MonoBehaviour
     private void Awake()
     {
         _mainMenuAnimator = GetComponent<Animation>();
+    }
+
+    private void OnEnable()
+    {
+        GameManager.Instance.OnGameStateChanged.AddListener(HandleGameStateChanged);
+    }
+
+    private void OnDisable()
+    {
+        GameManager.Instance.OnGameStateChanged.RemoveListener(HandleGameStateChanged);
     }
 
     public void OnFadeOutComplete()
@@ -42,4 +53,12 @@ public class MainMenu : MonoBehaviour
         _mainMenuAnimator.Play();
     }
 
+    private void HandleGameStateChanged(GameManager.GameState currentState, GameManager.GameState previousState)
+    {
+        if (previousState == GameManager.GameState.Pregame &&
+            currentState == GameManager.GameState.Running)
+        {
+            FadeOut();
+        }
+    }
 }
